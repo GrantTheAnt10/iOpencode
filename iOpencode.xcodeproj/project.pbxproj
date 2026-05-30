@@ -86,6 +86,18 @@
         ]
       }
     },
+    "7022979C5D604D628B269BEDD45B4FE3": {
+      "isa": "PBXBuildFile",
+      "fileRef": "12179025B07F43A59FF72CD3616D8F28"
+    },
+    "2441F63A1CC7408094C69772F285CDA4": {
+      "isa": "PBXBuildFile",
+      "fileRef": "C563DEC9B46B49F4B65BE9483AE85A37"
+    },
+    "110AA68BB6A2482AAA208A6F4B91A3D9": {
+      "isa": "PBXBuildFile",
+      "fileRef": "BE500B2D40AD4D3183BE146BFE6F8938"
+    },
     "4EFD52ADF4F3A62F8F32AF22": {
       "isa": "PBXFileReference",
       "explicitFileType": "wrapper.application",
@@ -133,9 +145,34 @@
       "name": "Products",
       "sourceTree": "<group>"
     },
+    "12179025B07F43A59FF72CD3616D8F28": {
+      "isa": "PBXFileReference",
+      "lastKnownFileType": "text.html",
+      "name": "terminal.html",
+      "path": "terminal.html",
+      "sourceTree": "<group>"
+    },
+    "C563DEC9B46B49F4B65BE9483AE85A37": {
+      "isa": "PBXFileReference",
+      "lastKnownFileType": "sourcecode.javascript",
+      "name": "index.js",
+      "path": "index.js",
+      "sourceTree": "<group>"
+    },
+    "BE500B2D40AD4D3183BE146BFE6F8938": {
+      "isa": "PBXFileReference",
+      "lastKnownFileType": "text.json",
+      "name": "package.json",
+      "path": "package.json",
+      "sourceTree": "<group>"
+    },
     "FF0A4DE658A41BA9AC97FBF6": {
       "isa": "PBXGroup",
-      "children": [],
+      "children": [
+        "12179025B07F43A59FF72CD3616D8F28",
+        "C563DEC9B46B49F4B65BE9483AE85A37",
+        "BE500B2D40AD4D3183BE146BFE6F8938"
+      ],
       "name": "www",
       "path": "www",
       "sourceTree": "<group>"
@@ -164,7 +201,10 @@
       "buildActionMask": "2147483647",
       "files": [
         "F50CEC7445031222589175E6",
-        "0A21B8362F5B3DF60C6F1595"
+        "0A21B8362F5B3DF60C6F1595",
+        "7022979C5D604D628B269BEDD45B4FE3",
+        "2441F63A1CC7408094C69772F285CDA4",
+        "110AA68BB6A2482AAA208A6F4B91A3D9"
       ],
       "runOnlyForDeploymentPostprocessing": "0"
     },
