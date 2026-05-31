@@ -46,56 +46,23 @@ jobs:
             echo "IPA created:"
             ls -lh ${{ runner.temp }}/iOpencode.ipa
           else
-            echo "No app found - trying xcodebuild export"
-            mkdir -p ${{ runner.temp }}/export
-            /usr/libexec/PlistBuddy -c "Add method string development" \
-              ${{ runner.temp }}/export/ExportOptions.plist 2>/dev/null || true
-            /usr/libexec/PlistBuddy -c "Add signingStyle string manual" \
-              ${{ runner.temp }}/export/ExportOptions.plist 2>/dev/null || true
-            xcodebuild -exportArchive \
-              -archivePath ${{ runner.temp }}/iOpencode.xcarchive \
-              -exportPath ${{ runner.temp }}/export/ \
-              -exportOptionsPlist ${{ runner.temp }}/export/ExportOptions.plist \
-              -allowProvisioningUpdates || true
-            cp ${{ runner.temp }}/export/*.ipa ${{ runner.temp }}/iOpencode.ipa 2>/dev/null || true
+            echo "ERROR: No app found at $APP"
+            exit 1
           fi
-
-      - name: Verify IPA
-        id: verify
-        run: |
-          if [ -f "${{ runner.temp }}/iOpencode.ipa" ]; then
-            echo "ipa_exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "ipa_exists=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Create Release
-        if: steps.verify.outputs.ipa_exists == 'true'
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v1
-          release_name: iOpencode v1
-          draft: false
-          prerelease: false
-
-      - name: Upload IPA to Release
-        if: steps.verify.outputs.ipa_exists == 'true'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ runner.temp }}/iOpencode.ipa
-          asset_name: iOpencode.ipa
-          asset_content_type: application/octet-stream
 
       - name: Upload IPA as artifact
-        if: always() && steps.verify.outputs.ipa_exists == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: iOpencode.ipa
+          name: iOpencode-v1
           path: ${{ runner.temp }}/iOpencode.ipa
-          if-no-files-found: warn
+          if-no-files-found: error
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: "iOpencode v1 - AI Coding Assistant for iOS"
+          files: ${{ runner.temp }}/iOpencode.ipa
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
