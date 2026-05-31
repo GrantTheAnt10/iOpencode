@@ -26,15 +26,11 @@ jobs:
           xcodebuild archive -project iOpencode.xcodeproj -scheme iOpencode \
             -destination "generic/platform=iOS" \
             -archivePath ${{ runner.temp }}/iOpencode.xcarchive \
-            -allowProvisioningUpdates \
-            CODE_SIGN_STYLE=Automatic CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY="-" \
             | xcpretty || xcodebuild archive -project iOpencode.xcodeproj \
             -scheme iOpencode -destination "generic/platform=iOS" \
             -archivePath ${{ runner.temp }}/iOpencode.xcarchive \
-            -allowProvisioningUpdates \
-            CODE_SIGN_STYLE=Automatic CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+            CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY="-"
 
       - name: Create unsigned IPA
         run: |
@@ -45,7 +41,9 @@ jobs:
           echo '  <key>method</key>' >> /tmp/export_options.plist
           echo '  <string>none</string>' >> /tmp/export_options.plist
           echo '  <key>signingStyle</key>' >> /tmp/export_options.plist
-          echo '  <string>automatic</string>' >> /tmp/export_options.plist
+          echo '  <string>manual</string>' >> /tmp/export_options.plist
+          echo '  <key>signingIdentity</key>' >> /tmp/export_options.plist
+          echo '  <string>-</string>' >> /tmp/export_options.plist
           echo '</dict>' >> /tmp/export_options.plist
           echo '</plist>' >> /tmp/export_options.plist
 
@@ -53,24 +51,13 @@ jobs:
           xcodebuild -exportArchive \
             -archivePath ${{ runner.temp }}/iOpencode.xcarchive \
             -exportPath ${{ runner.temp }}/ipa \
-            -exportOptionsPlist /tmp/export_options.plist || {
-            echo "xcodebuild export failed, trying manual IPA creation"
-            mkdir -p ${{ runner.temp }}/ipa/Payload
-            find ${{ runner.temp }}/iOpencode.xcarchive -name "*.app" -type d -exec cp -R {} ${{ runner.temp }}/ipa/Payload/ \; 2>/dev/null
-            cd ${{ runner.temp }}/ipa && zip -r ${{ runner.temp }}/iOpencode.ipa Payload/
-          }
+            -exportOptionsPlist /tmp/export_options.plist
           if [ -f "${{ runner.temp }}/ipa/iOpencode.ipa" ]; then
-            cp ${{ runner.temp }}/ipa/iOpencode.ipa ${{ runner.temp }}/iOpencode.ipa
             echo "IPA created:"
-            ls -lh ${{ runner.temp }}/iOpencode.ipa
-          elif [ -f "${{ runner.temp }}/ipa/Payload/iOpencode.app" ]; then
-            cd ${{ runner.temp }}/ipa && zip -r ${{ runner.temp }}/iOpencode.ipa Payload/
-            echo "IPA created manually:"
-            ls -lh ${{ runner.temp }}/iOpencode.ipa
+            ls -lh ${{ runner.temp }}/ipa/iOpencode.ipa
           else
-            echo "ERROR: IPA creation failed"
+            echo "ERROR: IPA not created"
             ls -la ${{ runner.temp }}/ipa/ 2>/dev/null || true
-            find ${{ runner.temp }}/iOpencode.xcarchive -type d 2>/dev/null | head -20
             exit 1
           fi
 
