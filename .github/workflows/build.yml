@@ -27,22 +27,23 @@ jobs:
             -destination "generic/platform=iOS" \
             -configuration Release \
             CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY="-" \
-            BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
             ONLY_ACTIVE_ARCH=NO \
             -derivedDataPath ${{ runner.temp }}/build
 
       - name: Create unsigned IPA
         run: |
           mkdir -p ${{ runner.temp }}/ipa/Payload
-          APP="${{ runner.temp }}/build/Products/Release-iphoneos/iOpencode.app"
-          if [ -d "$APP" ]; then
+          echo "Looking for app bundle..."
+          find ${{ runner.temp }}/build -name "*.app" -type d 2>/dev/null | head -5
+          APP=$(find ${{ runner.temp }}/build -name "*.app" -type d 2>/dev/null | head -1)
+          if [ -n "$APP" ] && [ -d "$APP" ]; then
             cp -R "$APP" ${{ runner.temp }}/ipa/Payload/
             cd ${{ runner.temp }}/ipa && zip -r ${{ runner.temp }}/iOpencode.ipa Payload/
             echo "IPA created:"
             ls -lh ${{ runner.temp }}/iOpencode.ipa
           else
-            echo "ERROR: App not found at $APP"
-            find ${{ runner.temp }}/build -name "*.app" -type d 2>/dev/null | head -5
+            echo "ERROR: App not found"
+            ls -la ${{ runner.temp }}/build/ 2>/dev/null || true
             exit 1
           fi
 
