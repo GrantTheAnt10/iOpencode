@@ -61,6 +61,7 @@ jobs:
           fi
 
       - name: Verify IPA
+        id: verify
         run: |
           if [ -f "${{ runner.temp }}/iOpencode.ipa" ]; then
             echo "ipa_exists=true" >> $GITHUB_OUTPUT
@@ -69,7 +70,7 @@ jobs:
           fi
 
       - name: Create Release
-        if: steps.Verify.outputs.ipa_exists == 'true'
+        if: steps.verify.outputs.ipa_exists == 'true'
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -81,7 +82,7 @@ jobs:
           prerelease: false
 
       - name: Upload IPA to Release
-        if: steps.Verify.outputs.ipa_exists == 'true'
+        if: steps.verify.outputs.ipa_exists == 'true'
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -92,7 +93,7 @@ jobs:
           asset_content_type: application/octet-stream
 
       - name: Upload IPA as artifact
-        if: steps.Verify.outputs.ipa_exists == 'true'
+        if: steps.verify.outputs.ipa_exists == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: iOpencode.ipa
