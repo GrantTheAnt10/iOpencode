@@ -43,8 +43,6 @@ jobs:
           <dict>
             <key>method</key>
             <string>none</string>
-            <key>signingStyle</key>
-            <string>manual</string>
           </dict>
           </plist>
           EOF
