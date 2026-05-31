@@ -52,18 +52,44 @@ jobs:
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO
 
-      - name: Export unsigned IPA
+      - name: Export IPA via xcodebuild
+        continue-on-error: true
+        id: export_ipa
         run: |
           mkdir -p ${{ runner.temp }}/export
-          /usr/libexec/PlistBuddy -c "Add method string development" ${{ runner.temp }}/export/ExportOptions.plist 2>/dev/null || true
-          /usr/libexec/PlistBuddy -c "Add signingStyle string manual" ${{ runner.temp }}/export/ExportOptions.plist 2>/dev/null || true
-          /usr/libexec/PlistBuddy -c "Add signingCertificate string iPhone Developer" ${{ runner.temp }}/export/ExportOptions.plist 2>/dev/null || true
-          /usr/libexec/PlistBuddy -c "Add stripSwiftSymbols bool true" ${{ runner.temp }}/export/ExportOptions.plist 2>/dev/null || true
+          cat > ${{ runner.temp }}/export/ExportOptions.plist << 'PLISTEOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>method</key>
+    <string>development</string>
+    <key>signingStyle</key>
+    <string>manual</string>
+</dict>
+</plist>
+PLISTEOF
           xcodebuild -exportArchive \
             -archivePath ${{ runner.temp }}/iOpencode.xcarchive \
             -exportPath ${{ runner.temp }}/export/ \
             -exportOptionsPlist ${{ runner.temp }}/export/ExportOptions.plist \
-            -allowProvisioningUpdates || true
+            -allowProvisioningUpdates 2>&1
+
+      - name: Build IPA manually (fallback if xcodebuild export fails)
+        if: steps.export_ipa.outcome != 'success'
+        run: |
+          mkdir -p ${{ runner.temp }}/ipa/Payload
+          APP_PATH=${{ runner.temp }}/iOpencode.xcarchive/Products/Applications/iOpencode.app
+          if [ -d "$APP_PATH" ]; then
+            cp -R "$APP_PATH" ${{ runner.temp }}/ipa/Payload/
+            cd ${{ runner.temp }}/ipa
+            zip -r ${{ runner.temp }}/export/iOpencode.ipa Payload/
+            echo "Manually created IPA"
+          else
+            echo "No .app found in archive at $APP_PATH"
+            ls -laR ${{ runner.temp }}/iOpencode.xcarchive/Products/ 2>/dev/null || true
+            exit 1
+          fi
 
       - name: Get IPA file path
         id: get_ipa
@@ -72,19 +98,13 @@ jobs:
           IPA_PATH=$(ls *.ipa 2>/dev/null || echo "")
           if [ -z "$IPA_PATH" ]; then
             echo "no_ipa=true" >> $GITHUB_OUTPUT
+            ls -la ${{ runner.temp }}/export/
+            ls -la ${{ runner.temp }}/iOpencode.xcarchive/Products/Applications/ 2>/dev/null || true
           else
             echo "ipa_path=${{ runner.temp }}/export/$IPA_PATH" >> $GITHUB_OUTPUT
             echo "ipa_name=$IPA_PATH" >> $GITHUB_OUTPUT
             echo "no_ipa=false" >> $GITHUB_OUTPUT
           fi
-
-      - name: Show export directory
-        if: always()
-        run: |
-          echo "=== Export dir ==="
-          ls -la ${{ runner.temp }}/export/ || echo "no export directory"
-          echo "=== Archive dir ==="
-          ls -la ${{ runner.temp }}/iOpencode.xcarchive/Products/Applications/ 2>/dev/null || echo "no apps in archive"
 
       - name: Create Release
         if: steps.get_ipa.outputs.no_ipa != 'true'
