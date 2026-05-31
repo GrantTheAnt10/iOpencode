@@ -1,0 +1,386 @@
+{
+  "archiveVersion": "1",
+  "classes": {},
+  "objectVersion": "56",
+  "objects": {
+    "86ED49C3277A76C206DF626B": {
+      "isa": "PBXFileReference",
+      "lastKnownFileType": "sourcecode.swift",
+      "name": "AppDelegate.swift",
+      "path": "AppDelegate.swift",
+      "sourceTree": "<group>"
+    },
+    "D7E59A0C602F5FD93F308483": {
+      "isa": "PBXBuildFile",
+      "fileRef": "86ED49C3277A76C206DF626B"
+    },
+    "914F388DB63C9E2710FDED2B": {
+      "isa": "PBXFileReference",
+      "lastKnownFileType": "sourcecode.swift",
+      "name": "SceneDelegate.swift",
+      "path": "SceneDelegate.swift",
+      "sourceTree": "<group>"
+    },
+    "28D0F0D3D930E10B73C4B8E8": {
+      "isa": "PBXBuildFile",
+      "fileRef": "914F388DB63C9E2710FDED2B"
+    },
+    "F731F4786C384310EA7F8719": {
+      "isa": "PBXFileReference",
+      "lastKnownFileType": "sourcecode.swift",
+      "name": "ViewController.swift",
+      "path": "ViewController.swift",
+      "sourceTree": "<group>"
+    },
+    "A30C9B415F7B9BCCCF79EDEE": {
+      "isa": "PBXBuildFile",
+      "fileRef": "F731F4786C384310EA7F8719"
+    },
+    "6EA83BEC5951D1A3D9BC23C4": {
+      "isa": "PBXFileReference",
+      "lastKnownFileType": "sourcecode.swift",
+      "name": "NodeBridge.swift",
+      "path": "NodeBridge.swift",
+      "sourceTree": "<group>"
+    },
+    "32A31C5CDC5DD413176C5FFD": {
+    "8C0A4DE658A41BA9AC97FBF7": {
+      "isa": "PBXFileReference",
+      "lastKnownFileType": "text.html",
+      "name": "terminal.html",
+      "path": "www/terminal.html",
+      "sourceTree": "<group>"
+    },
+    "8C0A4DE658A41BA9AC97FBF8": {
+      "isa": "PBXFileReference",
+      "lastKnownFileType": "sourcecode.js",
+      "name": "index.js",
+      "path": "www/index.js",
+      "sourceTree": "<group>"
+    },
+    "8C0A4DE658A41BA9AC97FBF9": {
+      "isa": "PBXFileReference",
+      "lastKnownFileType": "text.json",
+      "name": "package.json",
+      "path": "www/package.json",
+      "sourceTree": "<group>"
+    },      "isa": "PBXBuildFile",
+      "fileRef": "6EA83BEC5951D1A3D9BC23C4"
+    },
+    "0A1E16EB1FC2469D7E4F408B": {
+      "isa": "PBXFileReference",
+      "lastKnownFileType": "file.storyboard",
+      "name": "Main.storyboard",
+      "path": "Base.lproj/Main.storyboard",
+      "sourceTree": "<group>"
+    },
+    "F50CEC7445031222589175E6": {
+      "isa": "PBXBuildFile",
+      "fileRef": "0A1E16EB1FC2469D7E4F408B"
+    },
+    "C15FEDDB3DACEA19BC01D04C": {
+      "isa": "PBXFileReference",
+      "lastKnownFileType": "folder.assetcatalog",
+      "name": "Assets.xcassets",
+      "path": "Assets.xcassets",
+      "sourceTree": "<group>"
+    },
+    "0A21B8362F5B3DF60C6F1595": {
+      "isa": "PBXBuildFile",
+      "fileRef": "C15FEDDB3DACEA19BC01D04C"
+    },
+    "7EABCB37BBE4B3D435DDFE83": {
+      "isa": "PBXFileReference",
+      "lastKnownFileType": "wrapper.framework",
+      "name": "NodeMobile.framework",
+      "path": "NodeMobile.framework",
+      "sourceTree": "<group>"
+    },
+    "CAE7191B1567A7748093443D": {
+      "isa": "PBXBuildFile",
+      "fileRef": "7EABCB37BBE4B3D435DDFE83",
+      "settings": {
+        "ATTRIBUTES": [
+          "CodeSignOnCopy",
+          "RemoveHeadersOnCopy"
+        ]
+      }
+    },
+    "4EFD52ADF4F3A62F8F32AF22": {
+      "isa": "PBXFileReference",
+      "explicitFileType": "wrapper.application",
+      "includeInIndex": 0,
+      "path": "iOpencode.app",
+      "sourceTree": "BUILT_PRODUCTS_DIR"
+    },
+    "E50290A24C49A459B43487C5": {
+      "isa": "PBXGroup",
+      "children": [
+        "DB89E782D488330EABE72BF7",
+        "69013E1CB7BAE954EFE1A257",
+        "328EC33DF3954DC9B83FA285",
+        "FF0A4DE658A41BA9AC97FBF6"
+      ],
+      "sourceTree": "<group>"
+    },
+    "DB89E782D488330EABE72BF7": {
+      "isa": "PBXGroup",
+      "children": [
+        "86ED49C3277A76C206DF626B",
+        "914F388DB63C9E2710FDED2B",
+        "F731F4786C384310EA7F8719",
+        "6EA83BEC5951D1A3D9BC23C4",
+        "0A1E16EB1FC2469D7E4F408B",
+        "C15FEDDB3DACEA19BC01D04C"
+      ],
+      "name": "iOpencode",
+      "path": "iOpencode",
+      "sourceTree": "<group>"
+    },
+    "69013E1CB7BAE954EFE1A257": {
+      "isa": "PBXGroup",
+      "children": [
+        "7EABCB37BBE4B3D435DDFE83"
+      ],
+      "name": "Frameworks",
+      "sourceTree": "<group>"
+    },
+    "328EC33DF3954DC9B83FA285": {
+      "isa": "PBXGroup",
+      "children": [
+        "4EFD52ADF4F3A62F8F32AF22"
+      ],
+      "name": "Products",
+      "sourceTree": "<group>"
+    },
+"FF0A4DE658A41BA9AC97FBF6": {
+  "isa": "PBXGroup",
+  "children": [
+    "8C0A4DE658A41BA9AC97FBF7",
+    "8C0A4DE658A41BA9AC97FBF8",
+    "8C0A4DE658A41BA9AC97FBF9"
+  ],
+  "name": "www",
+  "path": "www",
+  "sourceTree": "<group>"
+},
+    "4E57AE888889001C06A4F7E8": {
+      "isa": "PBXSourcesBuildPhase",
+      "buildActionMask": "2147483647",
+      "files": [
+        "D7E59A0C602F5FD93F308483",
+        "28D0F0D3D930E10B73C4B8E8",
+        "A30C9B415F7B9BCCCF79EDEE",
+        "32A31C5CDC5DD413176C5FFD"
+      ],
+      "runOnlyForDeploymentPostprocessing": "0"
+    },
+    "69BE8A4D8E4D9DA4E7DB3928": {
+      "isa": "PBXFrameworksBuildPhase",
+      "buildActionMask": "2147483647",
+      "files": [
+        "CAE7191B1567A7748093443D"
+      ],
+      "runOnlyForDeploymentPostprocessing": "0"
+    },
+    "D6C9E8A172005E68A1DD674F": {
+      "isa": "PBXResourcesBuildPhase",
+      "buildActionMask": "2147483647",
+      "files": [
+        "F50CEC7445031222589175E6",
+        "0A21B8362F5B3DF60C6F1595"
+      ],
+      "runOnlyForDeploymentPostprocessing": "0"
+    },
+    "CC531F55156D1B4CD472E876": {
+      "isa": "PBXCopyFilesBuildPhase",
+      "buildActionMask": "2147483647",
+      "dstPath": "",
+      "dstSubfolderSpec": 10,
+      "files": [
+        "CAE7191B1567A7748093443D"
+      ],
+      "name": "Embed Frameworks",
+      "runOnlyForDeploymentPostprocessing": "0"
+    },
+    "7082CC0B6FC1282FCEABD07A": {
+      "isa": "XCBuildConfiguration",
+      "buildSettings": {
+        "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",
+        "CODE_SIGN_STYLE": "Automatic",
+        "CURRENT_PROJECT_VERSION": "1",
+        "GENERATE_INFOPLIST_FILE": "YES",
+        "INFOPLIST_FILE": "iOpencode/Info.plist",
+        "INFOPLIST_KEY_CFBundleDisplayName": "iOpencode",
+        "INFOPLIST_KEY_UIApplicationSceneManifest_Generation": "YES",
+        "INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents": "YES",
+        "INFOPLIST_KEY_UILaunchStoryboardName": "LaunchScreen",
+        "INFOPLIST_KEY_UIMainStoryboardFile": "Main",
+        "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad": "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight",
+        "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone": "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight",
+        "FRAMEWORK_SEARCH_PATHS": [
+          "$(inherited)",
+          "$(PROJECT_DIR)"
+        ],
+        "IPHONEOS_DEPLOYMENT_TARGET": "17.0",
+        "LD_RUNPATH_SEARCH_PATHS": [
+          "$(inherited)",
+          "@executable_path/Frameworks"
+        ],
+        "MARKETING_VERSION": "1.0",
+        "PRODUCT_BUNDLE_IDENTIFIER": "com.granttheant10.iOpencode",
+        "PRODUCT_NAME": "iOpencode",
+        "SWIFT_EMIT_LOC_STRINGS": "YES",
+        "SWIFT_VERSION": "5.0",
+        "TARGETED_DEVICE_FAMILY": "1,2",
+        "PROVISIONING_PROFILE_SPECIFIER": ""
+      },
+      "name": "Debug"
+    },
+    "639A7CA24D39909E713B47F7": {
+      "isa": "XCBuildConfiguration",
+      "buildSettings": {
+        "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",
+        "CODE_SIGN_STYLE": "Automatic",
+        "CURRENT_PROJECT_VERSION": "1",
+        "GENERATE_INFOPLIST_FILE": "YES",
+        "INFOPLIST_FILE": "iOpencode/Info.plist",
+        "INFOPLIST_KEY_CFBundleDisplayName": "iOpencode",
+        "INFOPLIST_KEY_UIApplicationSceneManifest_Generation": "YES",
+        "INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents": "YES",
+        "INFOPLIST_KEY_UILaunchStoryboardName": "LaunchScreen",
+        "INFOPLIST_KEY_UIMainStoryboardFile": "Main",
+        "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad": "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight",
+        "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone": "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight",
+        "FRAMEWORK_SEARCH_PATHS": [
+          "$(inherited)",
+          "$(PROJECT_DIR)"
+        ],
+        "IPHONEOS_DEPLOYMENT_TARGET": "17.0",
+        "LD_RUNPATH_SEARCH_PATHS": [
+          "$(inherited)",
+          "@executable_path/Frameworks"
+        ],
+        "MARKETING_VERSION": "1.0",
+        "PRODUCT_BUNDLE_IDENTIFIER": "com.granttheant10.iOpencode",
+        "PRODUCT_NAME": "iOpencode",
+        "SWIFT_EMIT_LOC_STRINGS": "YES",
+        "SWIFT_VERSION": "5.0",
+        "TARGETED_DEVICE_FAMILY": "1,2",
+        "PROVISIONING_PROFILE_SPECIFIER": ""
+      },
+      "name": "Release"
+    },
+    "B483F6EB73610DE752E457A0": {
+      "isa": "XCConfigurationList",
+      "buildConfigurations": [
+        "7082CC0B6FC1282FCEABD07A",
+        "639A7CA24D39909E713B47F7"
+      ],
+      "defaultConfigurationIsVisible": 0,
+      "defaultConfigurationName": "Release"
+    },
+    "D08DD63EED508AD30D0CB0B4": {
+      "isa": "XCBuildConfiguration",
+      "buildSettings": {
+        "ALWAYS_SEARCH_USER_PATHS": "NO",
+        "CLANG_ANALYZER_NONNULL": "YES",
+        "CLANG_CXX_LANGUAGE_STANDARD": "gnu++20",
+        "CLANG_ENABLE_MODULES": "YES",
+        "CLANG_ENABLE_OBJC_ARC": "YES",
+        "COPY_PHASE_STRIP": "NO",
+        "DEBUG_INFORMATION_FORMAT": "dwarf",
+        "ENABLE_STRICT_OBJC_MSGSEND": "YES",
+        "ENABLE_TESTABILITY": "YES",
+        "GCC_DYNAMIC_NO_PIC": "NO",
+        "GCC_OPTIMIZATION_LEVEL": "0",
+        "GCC_PREPROCESSOR_DEFINITIONS": [
+          "DEBUG=1",
+          "$(inherited)"
+        ],
+        "IPHONEOS_DEPLOYMENT_TARGET": "17.0",
+        "MTL_ENABLE_DEBUG_INFO": "INCLUDE_SOURCE",
+        "ONLY_ACTIVE_ARCH": "YES",
+        "SDKROOT": "iphoneos",
+        "SWIFT_ACTIVE_COMPILATION_CONDITIONS": "DEBUG",
+        "SWIFT_OPTIMIZATION_LEVEL": "-Onone"
+      },
+      "name": "Debug"
+    },
+    "811CB99F7A296F7846C18A7F": {
+      "isa": "XCBuildConfiguration",
+      "buildSettings": {
+        "ALWAYS_SEARCH_USER_PATHS": "NO",
+        "CLANG_ANALYZER_NONNULL": "YES",
+        "CLANG_CXX_LANGUAGE_STANDARD": "gnu++20",
+        "CLANG_ENABLE_MODULES": "YES",
+        "CLANG_ENABLE_OBJC_ARC": "YES",
+        "COPY_PHASE_STRIP": "NO",
+        "DEBUG_INFORMATION_FORMAT": "dwarf-with-dsym",
+        "ENABLE_STRICT_OBJC_MSGSEND": "YES",
+        "ENABLE_TESTABILITY": "NO",
+        "GCC_DYNAMIC_NO_PIC": "YES",
+        "GCC_OPTIMIZATION_LEVEL": "s",
+        "IPHONEOS_DEPLOYMENT_TARGET": "17.0",
+        "MTL_ENABLE_DEBUG_INFO": "NO",
+        "ONLY_ACTIVE_ARCH": "NO",
+        "SDKROOT": "iphoneos",
+        "SWIFT_ACTIVE_COMPILATION_CONDITIONS": "",
+        "SWIFT_OPTIMIZATION_LEVEL": "-O",
+        "ENABLE_NS_ASSERTIONS": "NO",
+        "SWIFT_COMPILATION_MODE": "wholemodule",
+        "VALIDATE_PRODUCT": "YES"
+      },
+      "name": "Release"
+    },
+    "41A2CC2D5321B7BB2E956CA5": {
+      "isa": "XCConfigurationList",
+      "buildConfigurations": [
+        "D08DD63EED508AD30D0CB0B4",
+        "811CB99F7A296F7846C18A7F"
+      ],
+      "defaultConfigurationIsVisible": 0,
+      "defaultConfigurationName": "Release"
+    },
+    "7190DB7A80274008D896F1B0": {
+      "isa": "PBXNativeTarget",
+      "buildConfigurationList": "B483F6EB73610DE752E457A0",
+      "buildPhases": [
+        "4E57AE888889001C06A4F7E8",
+        "69BE8A4D8E4D9DA4E7DB3928",
+        "D6C9E8A172005E68A1DD674F",
+        "CC531F55156D1B4CD472E876"
+      ],
+      "buildRules": [],
+      "dependencies": [],
+      "name": "iOpencode",
+      "productName": "iOpencode",
+      "productReference": "4EFD52ADF4F3A62F8F32AF22",
+      "productType": "com.apple.product-type.application"
+    },
+    "35FD55BB3686264FAE37A584": {
+      "isa": "PBXProject",
+      "attributes": {
+        "BuildIndependentTargetsInParallel": "1",
+        "LastSwiftUpdateCheck": "1620",
+        "LastUpgradeCheck": "1620"
+      },
+      "buildConfigurationList": "41A2CC2D5321B7BB2E956CA5",
+      "compatibilityVersion": "Xcode 14.0",
+      "developmentRegion": "en",
+      "hasScannedForEncodings": "0",
+      "knownRegions": [
+        "en",
+        "Base"
+      ],
+      "mainGroup": "E50290A24C49A459B43487C5",
+      "productRefGroup": "328EC33DF3954DC9B83FA285",
+      "projectDirPath": "",
+      "projectRoot": "",
+      "targets": [
+        "7190DB7A80274008D896F1B0"
+      ]
+    }
+  },
+  "rootObject": "35FD55BB3686264FAE37A584"
+}
