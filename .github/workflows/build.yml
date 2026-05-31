@@ -26,31 +26,21 @@ jobs:
           xcodebuild archive -project iOpencode.xcodeproj -scheme iOpencode \
             -destination "generic/platform=iOS" \
             -archivePath ${{ runner.temp }}/iOpencode.xcarchive \
-            CODE_SIGN_STYLE=Automatic CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
-            | xcpretty || xcodebuild archive -project iOpencode.xcodeproj \
-            -scheme iOpencode -destination "generic/platform=iOS" \
-            -archivePath ${{ runner.temp }}/iOpencode.xcarchive \
-            CODE_SIGN_STYLE=Automatic CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+            CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY="-"
 
       - name: Create unsigned IPA
         run: |
-          mkdir -p ${{ runner.temp }}/extract
-          cd ${{ runner.temp }}/extract
-          xar -xf ${{ runner.temp }}/iOpencode.xcarchive
-          echo "Extracted archive contents:"
-          ls -la
-          find . -name "*.app" -type d 2>/dev/null | head -5
-          APP=$(find . -name "*.app" -type d 2>/dev/null | head -1)
-          if [ -n "$APP" ] && [ -d "$APP" ]; then
+          APP="${{ runner.temp }}/iOpencode.xcarchive/Products/Applications/iOpencode.app"
+          if [ -d "$APP" ]; then
             mkdir -p ${{ runner.temp }}/ipa/Payload
             cp -R "$APP" ${{ runner.temp }}/ipa/Payload/
             cd ${{ runner.temp }}/ipa && zip -r ${{ runner.temp }}/iOpencode.ipa Payload/
             echo "IPA created:"
             ls -lh ${{ runner.temp }}/iOpencode.ipa
           else
-            echo "ERROR: App not found in archive"
+            echo "ERROR: App not found at $APP"
+            ls -la "${{ runner.temp }}/iOpencode.xcarchive/Products/" 2>/dev/null || true
+            ls -la "${{ runner.temp }}/iOpencode.xcarchive/Products/Applications/" 2>/dev/null || true
             exit 1
           fi
 
