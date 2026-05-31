@@ -26,7 +26,13 @@ jobs:
           xcodebuild archive -project iOpencode.xcodeproj -scheme iOpencode \
             -destination "generic/platform=iOS" \
             -archivePath ${{ runner.temp }}/iOpencode.xcarchive \
-            -allowProvisioningUpdates
+            CODE_SIGN_STYLE=Automatic CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
+            | xcpretty || xcodebuild archive -project iOpencode.xcodeproj \
+            -scheme iOpencode -destination "generic/platform=iOS" \
+            -archivePath ${{ runner.temp }}/iOpencode.xcarchive \
+            CODE_SIGN_STYLE=Automatic CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
       - name: Create unsigned IPA
         run: |
