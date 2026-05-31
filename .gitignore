@@ -17,3 +17,5 @@ www/package-lock.json
 
 # Large binaries - downloaded separately
 NodeMobile.framework/
+NodeMobile.xcframework/
+include/
