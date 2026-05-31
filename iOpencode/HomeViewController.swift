@@ -93,10 +93,11 @@ class HomeViewController: UIViewController {
         containerView.addSubview(startButton)
 
         let configButton = UIButton(type: .system)
-        configButton.setTitle("  Configure  ", for: .normal)
-        configButton.setTitleColor(UIColor.white.withAlphaComponent(0.5), for: .normal)
+        configButton.setTitle("  \u{2699} AGENTS.md  ", for: .normal)
+        configButton.setTitleColor(UIColor(red: 0.2, green: 0.8, blue: 1.0, alpha: 0.7), for: .normal)
         configButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         configButton.alpha = 0
+        configButton.addTarget(self, action: #selector(configTapped), for: .touchUpInside)
         configButton.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(configButton)
 
@@ -175,5 +176,11 @@ class HomeViewController: UIViewController {
         let terminalVC = TerminalViewController()
         terminalVC.modalPresentationStyle = .fullScreen
         present(terminalVC, animated: true)
+    }
+
+    @objc private func configTapped() {
+        let agentsVC = AgentsEditorController()
+        agentsVC.modalPresentationStyle = .fullScreen
+        present(agentsVC, animated: true)
     }
 }

@@ -105,11 +105,10 @@ class TerminalViewController: UIViewController {
             terminalTextView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             terminalTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             terminalTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            terminalTextView.bottomAnchor.constraint(equal: view.safeAreaLayoutGuide.bottomAnchor, constant: -60),
+            terminalTextView.bottomAnchor.constraint(equalTo: bottomBar.topAnchor),
 
             bottomBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             bottomBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            bottomBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             bottomBar.heightAnchor.constraint(equalToConstant: 60),
 
             bottomDivider.leadingAnchor.constraint(equalTo: bottomBar.leadingAnchor),
