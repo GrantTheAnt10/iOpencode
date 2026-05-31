@@ -80,6 +80,39 @@
       "isa": "PBXBuildFile",
       "fileRef": "8C0A4DE658A41BA9AC97FBF9"
     },
+    "A05D0FDCA1DEBFCFBF0B0394": {
+      "isa": "PBXFileReference",
+      "lastKnownFileType": "text.css",
+      "name": "xterm.css",
+      "path": "lib/xterm.css",
+      "sourceTree": "<group>"
+    },
+    "2261FE324EDA02E99B26C526": {
+      "isa": "PBXFileReference",
+      "lastKnownFileType": "sourcecode.javascript",
+      "name": "xterm.js",
+      "path": "lib/xterm.js",
+      "sourceTree": "<group>"
+    },
+    "C99035C9BA5062D9A538A9D0": {
+      "isa": "PBXFileReference",
+      "lastKnownFileType": "sourcecode.javascript",
+      "name": "xterm-addon-fit.js",
+      "path": "lib/xterm-addon-fit.js",
+      "sourceTree": "<group>"
+    },
+    "88FD72D250E27FAB76CB97A5": {
+      "isa": "PBXBuildFile",
+      "fileRef": "A05D0FDCA1DEBFCFBF0B0394"
+    },
+    "9426BCCE600D3253683CA964": {
+      "isa": "PBXBuildFile",
+      "fileRef": "2261FE324EDA02E99B26C526"
+    },
+    "044F61A220EF5BA983CD8755": {
+      "isa": "PBXBuildFile",
+      "fileRef": "C99035C9BA5062D9A538A9D0"
+    },
     "0A1E16EB1FC2469D7E4F408B": {
       "isa": "PBXFileReference",
       "lastKnownFileType": "file.storyboard",
@@ -171,7 +204,10 @@
   "children": [
     "8C0A4DE658A41BA9AC97FBF7",
     "8C0A4DE658A41BA9AC97FBF8",
-    "8C0A4DE658A41BA9AC97FBF9"
+    "8C0A4DE658A41BA9AC97FBF9",
+    "A05D0FDCA1DEBFCFBF0B0394",
+    "2261FE324EDA02E99B26C526",
+    "C99035C9BA5062D9A538A9D0"
   ],
   "name": "www",
   "path": "www",
@@ -204,7 +240,10 @@
         "0A21B8362F5B3DF60C6F1595",
         "A1B2C3D4E5F6A7B8C9D0E1F2",
         "B2C3D4E5F6A7B8C9D0E1F2A3",
-        "C3D4E5F6A7B8C9D0E1F2A3B4"
+        "C3D4E5F6A7B8C9D0E1F2A3B4",
+        "88FD72D250E27FAB76CB97A5",
+        "9426BCCE600D3253683CA964",
+        "044F61A220EF5BA983CD8755"
       ],
       "runOnlyForDeploymentPostprocessing": "0"
     },
