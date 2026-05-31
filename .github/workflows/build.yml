@@ -95,7 +95,7 @@ jobs:
           asset_content_type: application/octet-stream
 
       - name: Upload IPA as artifact
-        if: steps.verify.outputs.ipa_exists == 'true'
+        if: always() && steps.verify.outputs.ipa_exists == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: iOpencode.ipa
