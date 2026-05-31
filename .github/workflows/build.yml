@@ -27,6 +27,9 @@ jobs:
       - name: Accept Xcode license
         run: sudo xcodebuild -license accept || true
 
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_16.4.app || true
+
       - name: Build archive
         run: |
           xcodebuild archive \
@@ -49,10 +52,25 @@ jobs:
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO
 
-      - name: Export IPA
+      - name: Export unsigned IPA
         run: |
           mkdir -p ${{ runner.temp }}/export
-          /usr/libexec/PlistBuddy -c "Add method string development" ${{ runner.temp }}/export/ExportOptions.plist 2>/dev/null || true
+          cat > ${{ runner.temp }}/export/ExportOptions.plist << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>method</key>
+    <string>development</string>
+    <key>signingStyle</key>
+    <string>manual</string>
+    <key>signingCertificate</key>
+    <string>iPhone Developer</string>
+    <key>stripSwiftSymbols</key>
+    <true/>
+</dict>
+</plist>
+EOF
           xcodebuild -exportArchive \
             -archivePath ${{ runner.temp }}/iOpencode.xcarchive \
             -exportPath ${{ runner.temp }}/export/ \
@@ -71,6 +89,14 @@ jobs:
             echo "ipa_name=$IPA_PATH" >> $GITHUB_OUTPUT
             echo "no_ipa=false" >> $GITHUB_OUTPUT
           fi
+
+      - name: Show export directory
+        if: always()
+        run: |
+          echo "=== Export dir ==="
+          ls -la ${{ runner.temp }}/export/ || echo "no export directory"
+          echo "=== Archive dir ==="
+          ls -la ${{ runner.temp }}/iOpencode.xcarchive/Products/Applications/ 2>/dev/null || echo "no apps in archive"
 
       - name: Create Release
         if: steps.get_ipa.outputs.no_ipa != 'true'
@@ -102,7 +128,3 @@ jobs:
           name: iOpencode.ipa
           path: ${{ steps.get_ipa.outputs.ipa_path }}
           if-no-files-found: warn
-
-      - name: Show export directory
-        if: always()
-        run: ls -la ${{ runner.temp }}/export/ || echo "no export directory"
