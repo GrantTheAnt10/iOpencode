@@ -3,7 +3,7 @@ import NodeMobile
 
 class NodeRunner: NSObject {
     static func startNode() {
-        let wwwPath = Bundle.main.resourcePath! + "/www"
+        let wwwPath = Bundle.main.resourcePath!
         let args: [String] = ["node", wwwPath + "/index.js"]
         #if DEBUG
         print("Starting Node.js with script: \(args.last ?? "")")
@@ -25,7 +25,7 @@ class NodeProcess {
     private var stdinPipe: Pipe?
 
     func start() {
-        let wwwPath = Bundle.main.resourcePath! + "/www"
+        let wwwPath = Bundle.main.resourcePath!
         FileManager.default.changeCurrentDirectoryPath(wwwPath)
         setenv("NODE_PATH", "\(wwwPath)/node_modules", 1)
         setenv("HOME", wwwPath, 1)

@@ -19,7 +19,7 @@ class ViewController: UIViewController, WKUIDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        guard let url = Bundle.main.url(forResource: "terminal", withExtension: "html", subdirectory: "www") else {
+        guard let url = Bundle.main.url(forResource: "terminal", withExtension: "html") else {
             fatalError("terminal.html not found")
         }
         webView.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
