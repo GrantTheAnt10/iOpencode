@@ -138,13 +138,14 @@
       },
       "DB89E782D488330EABE72BF7": {
          "isa": "PBXGroup",
-         "children": [
-            "6EA83BEC5951D1A3D9BC23C4",
-            "0A1E16EB1FC2469D7E4F408B",
-            "C15FEDDB3DACEA19BC01D04C",
-            "179A5B0176C48838F2EB5105",
-            "143E198E65796C4EAEB4703E"
-         ],
+          "children": [
+             "6EA83BEC5951D1A3D9BC23C4",
+             "0A1E16EB1FC2469D7E4F408B",
+             "C15FEDDB3DACEA19BC01D04C",
+             "179A5B0176C48838F2EB5105",
+             "143E198E65796C4EAEB4703E",
+             "AGENTSEDITOR01DEADBEEF1234"
+          ],
          "name": "iOpencode",
          "path": "iOpencode",
          "sourceTree": "<group>"
@@ -182,11 +183,12 @@
       "4E57AE888889001C06A4F7E8": {
          "isa": "PBXSourcesBuildPhase",
          "buildActionMask": "2147483647",
-         "files": [
-            "32A31C5CDC5DD413176C5FFD",
-            "E3CA83AF8F70155177612A6F",
-            "D9201505B8ACEEE9B47514B1"
-         ],
+          "files": [
+             "32A31C5CDC5DD413176C5FFD",
+             "E3CA83AF8F70155177612A6F",
+             "D9201505B8ACEEE9B47514B1",
+             "AGENTSEDITOR02DEADBEEF1234"
+          ],
          "runOnlyForDeploymentPostprocessing": "0"
       },
       "69BE8A4D8E4D9DA4E7DB3928": {
@@ -415,10 +417,21 @@
          "isa": "PBXBuildFile",
          "fileRef": "179A5B0176C48838F2EB5105"
       },
-      "D9201505B8ACEEE9B47514B1": {
-         "isa": "PBXBuildFile",
-         "fileRef": "143E198E65796C4EAEB4703E"
-      }
-   },
+       "D9201505B8ACEEE9B47514B1": {
+          "isa": "PBXBuildFile",
+          "fileRef": "143E198E65796C4EAEB4703E"
+       },
+       "AGENTSEDITOR01DEADBEEF1234": {
+          "isa": "PBXFileReference",
+          "lastKnownFileType": "sourcecode.swift",
+          "name": "AgentsEditorController.swift",
+          "path": "AgentsEditorController.swift",
+          "sourceTree": "<group>"
+       },
+       "AGENTSEDITOR02DEADBEEF1234": {
+          "isa": "PBXBuildFile",
+          "fileRef": "AGENTSEDITOR01DEADBEEF1234"
+       }
+    },
    "rootObject": "35FD55BB3686264FAE37A584"
 }
