@@ -21,43 +21,28 @@ jobs:
       - name: Accept Xcode license
         run: sudo xcodebuild -license accept || true
 
-      - name: Build archive
+      - name: Build app
         run: |
-          xcodebuild archive -project iOpencode.xcodeproj -scheme iOpencode \
+          xcodebuild build -project iOpencode.xcodeproj -scheme iOpencode \
             -destination "generic/platform=iOS" \
-            -archivePath ${{ runner.temp }}/iOpencode.xcarchive \
+            -configuration Release \
             CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY="-" \
-            | xcpretty || xcodebuild archive -project iOpencode.xcodeproj \
-            -scheme iOpencode -destination "generic/platform=iOS" \
-            -archivePath ${{ runner.temp }}/iOpencode.xcarchive \
-            CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY="-"
+            BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
+            ONLY_ACTIVE_ARCH=NO \
+            -derivedDataPath ${{ runner.temp }}/build
 
       - name: Create unsigned IPA
         run: |
-          echo '<?xml version="1.0" encoding="UTF-8"?>' > /tmp/export_options.plist
-          echo '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' >> /tmp/export_options.plist
-          echo '<plist version="1.0">' >> /tmp/export_options.plist
-          echo '<dict>' >> /tmp/export_options.plist
-          echo '  <key>method</key>' >> /tmp/export_options.plist
-          echo '  <string>none</string>' >> /tmp/export_options.plist
-          echo '  <key>signingStyle</key>' >> /tmp/export_options.plist
-          echo '  <string>manual</string>' >> /tmp/export_options.plist
-          echo '  <key>signingIdentity</key>' >> /tmp/export_options.plist
-          echo '  <string>-</string>' >> /tmp/export_options.plist
-          echo '</dict>' >> /tmp/export_options.plist
-          echo '</plist>' >> /tmp/export_options.plist
-
-          mkdir -p ${{ runner.temp }}/ipa
-          xcodebuild -exportArchive \
-            -archivePath ${{ runner.temp }}/iOpencode.xcarchive \
-            -exportPath ${{ runner.temp }}/ipa \
-            -exportOptionsPlist /tmp/export_options.plist
-          if [ -f "${{ runner.temp }}/ipa/iOpencode.ipa" ]; then
+          mkdir -p ${{ runner.temp }}/ipa/Payload
+          APP="${{ runner.temp }}/build/Products/Release-iphoneos/iOpencode.app"
+          if [ -d "$APP" ]; then
+            cp -R "$APP" ${{ runner.temp }}/ipa/Payload/
+            cd ${{ runner.temp }}/ipa && zip -r ${{ runner.temp }}/iOpencode.ipa Payload/
             echo "IPA created:"
-            ls -lh ${{ runner.temp }}/ipa/iOpencode.ipa
+            ls -lh ${{ runner.temp }}/iOpencode.ipa
           else
-            echo "ERROR: IPA not created"
-            ls -la ${{ runner.temp }}/ipa/ 2>/dev/null || true
+            echo "ERROR: App not found at $APP"
+            find ${{ runner.temp }}/build -name "*.app" -type d 2>/dev/null | head -5
             exit 1
           fi
 
