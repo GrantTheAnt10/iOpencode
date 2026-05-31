@@ -48,21 +48,21 @@
       "isa": "PBXFileReference",
       "lastKnownFileType": "text.html",
       "name": "terminal.html",
-      "path": "www/terminal.html",
+      "path": "terminal.html",
       "sourceTree": "<group>"
     },
     "8C0A4DE658A41BA9AC97FBF8": {
       "isa": "PBXFileReference",
       "lastKnownFileType": "sourcecode.js",
       "name": "index.js",
-      "path": "www/index.js",
+      "path": "index.js",
       "sourceTree": "<group>"
     },
     "8C0A4DE658A41BA9AC97FBF9": {
       "isa": "PBXFileReference",
       "lastKnownFileType": "text.json",
       "name": "package.json",
-      "path": "www/package.json",
+      "path": "package.json",
       "sourceTree": "<group>"
     },      "isa": "PBXBuildFile",
       "fileRef": "6EA83BEC5951D1A3D9BC23C4"
