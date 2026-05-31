@@ -13,12 +13,10 @@ jobs:
 
       - name: Download NodeMobile.framework
         run: |
-          if [ ! -d "NodeMobile.framework" ]; then
-            curl -L -o /tmp/nodejs-mobile-ios.zip \
-              https://github.com/JaneaSystems/nodejs-mobile/releases/download/nodejs-mobile-v0.3.3/nodejs-mobile-v0.3.3-ios.zip
-            unzip /tmp/nodejs-mobile-ios.zip -d .
-            mv Release-iphoneos/NodeMobile.framework .
-          fi
+          curl -L -o /tmp/nodejs-mobile-ios.zip \
+            https://github.com/JaneaSystems/nodejs-mobile/releases/download/nodejs-mobile-v0.3.3/nodejs-mobile-v0.3.3-ios.zip
+          unzip -o /tmp/nodejs-mobile-ios.zip -d .
+          mv Release-iphoneos/NodeMobile.framework .
 
       - name: Accept Xcode license
         run: sudo xcodebuild -license accept || true
