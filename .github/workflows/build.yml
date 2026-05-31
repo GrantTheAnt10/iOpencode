@@ -2,7 +2,7 @@ name: Build iOpencode IPA
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "master" ]
   workflow_dispatch:
 
 jobs:
@@ -15,9 +15,10 @@ jobs:
       - name: Download NodeMobile.framework
         run: |
           if [ ! -d "NodeMobile.framework" ]; then
-            curl -L -o /tmp/NodeMobile.framework.zip \
-              https://github.com/cjntjy/nodejs-mobile-ios/releases/download/v0.3.3/NodeMobile.framework.zip
-            unzip /tmp/NodeMobile.framework.zip -d .
+            curl -L -o /tmp/nodejs-mobile-ios.zip \
+              https://github.com/JaneaSystems/nodejs-mobile/releases/download/nodejs-mobile-v0.3.3/nodejs-mobile-v0.3.3-ios.zip
+            unzip /tmp/nodejs-mobile-ios.zip -d .
+            mv Release-iphoneos/NodeMobile.framework .
           fi
 
       - name: List Xcodes
@@ -58,9 +59,50 @@ jobs:
             -exportOptionsPlist ${{ runner.temp }}/export/ExportOptions.plist \
             -allowProvisioningUpdates || true
 
-      - name: Upload IPA
+      - name: Get IPA file path
+        id: get_ipa
+        run: |
+          cd ${{ runner.temp }}/export
+          IPA_PATH=$(ls *.ipa 2>/dev/null || echo "")
+          if [ -z "$IPA_PATH" ]; then
+            echo "no_ipa=true" >> $GITHUB_OUTPUT
+          else
+            echo "ipa_path=${{ runner.temp }}/export/$IPA_PATH" >> $GITHUB_OUTPUT
+            echo "ipa_name=$IPA_PATH" >> $GITHUB_OUTPUT
+            echo "no_ipa=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Release
+        if: steps.get_ipa.outputs.no_ipa != 'true'
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: iOpencode v${{ github.run_number }}
+          draft: false
+          prerelease: false
+
+      - name: Upload IPA to Release
+        if: steps.get_ipa.outputs.no_ipa != 'true'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.get_ipa.outputs.ipa_path }}
+          asset_name: ${{ steps.get_ipa.outputs.ipa_name }}
+          asset_content_type: application/octet-stream
+
+      - name: Upload IPA as artifact
+        if: steps.get_ipa.outputs.no_ipa != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: iOpencode.ipa
-          path: ${{ runner.temp }}/export/*.ipa
+          path: ${{ steps.get_ipa.outputs.ipa_path }}
           if-no-files-found: warn
+
+      - name: Show export directory
+        if: always()
+        run: ls -la ${{ runner.temp }}/export/ || echo "no export directory"
