@@ -26,21 +26,35 @@ jobs:
           xcodebuild archive -project iOpencode.xcodeproj -scheme iOpencode \
             -destination "generic/platform=iOS" \
             -archivePath ${{ runner.temp }}/iOpencode.xcarchive \
-            CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY="-"
+            CODE_SIGN_STYLE=Automatic CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
       - name: Create unsigned IPA
         run: |
-          APP="${{ runner.temp }}/iOpencode.xcarchive/Products/Applications/iOpencode.app"
-          if [ -d "$APP" ]; then
-            mkdir -p ${{ runner.temp }}/ipa/Payload
-            cp -R "$APP" ${{ runner.temp }}/ipa/Payload/
-            cd ${{ runner.temp }}/ipa && zip -r ${{ runner.temp }}/iOpencode.ipa Payload/
+          cat > /tmp/export_options.plist << 'EOF'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>none</string>
+            <key>signingStyle</key>
+            <string>manual</string>
+          </dict>
+          </plist>
+          EOF
+
+          xcodebuild -exportArchive \
+            -archivePath ${{ runner.temp }}/iOpencode.xcarchive \
+            -exportPath ${{ runner.temp }}/ipa \
+            -exportOptionsPlist /tmp/export_options.plist
+
+          if [ -f "${{ runner.temp }}/ipa/iOpencode.ipa" ]; then
             echo "IPA created:"
-            ls -lh ${{ runner.temp }}/iOpencode.ipa
+            ls -lh ${{ runner.temp }}/ipa/iOpencode.ipa
           else
-            echo "ERROR: App not found at $APP"
-            ls -la "${{ runner.temp }}/iOpencode.xcarchive/Products/" 2>/dev/null || true
-            ls -la "${{ runner.temp }}/iOpencode.xcarchive/Products/Applications/" 2>/dev/null || true
+            echo "ERROR: IPA not created"
+            ls -la ${{ runner.temp }}/ipa/ 2>/dev/null || true
             exit 1
           fi
 
