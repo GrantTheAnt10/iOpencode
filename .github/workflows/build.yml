@@ -38,18 +38,30 @@ jobs:
 
       - name: Create unsigned IPA
         run: |
-          mkdir -p ${{ runner.temp }}/ipa/Payload
-          APP=$(find ${{ runner.temp }}/iOpencode.xcarchive/Products -name "*.app" -type d 2>/dev/null | head -1)
-          if [ -n "$APP" ] && [ -d "$APP" ]; then
-            echo "Found app at: $APP"
-            cp -R "$APP" ${{ runner.temp }}/ipa/Payload/
-            cd ${{ runner.temp }}/ipa && zip -r ${{ runner.temp }}/iOpencode.ipa Payload/
+          EXPORT_PATH=${{ runner.temp }}/export
+          mkdir -p "$EXPORT_PATH"
+          xcodebuild -exportArchive \
+            -archivePath ${{ runner.temp }}/iOpencode.xcarchive \
+            -exportPath "$EXPORT_PATH" \
+            -exportOptionsPlist - << 'EOF'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>none</string>
+            <key>signingStyle</key>
+            <string>automatic</string>
+          </dict>
+          </plist>
+          EOF
+          if [ -f "$EXPORT_PATH/iOpencode.ipa" ]; then
+            cp "$EXPORT_PATH/iOpencode.ipa" ${{ runner.temp }}/iOpencode.ipa
             echo "IPA created:"
             ls -lh ${{ runner.temp }}/iOpencode.ipa
           else
-            echo "ERROR: No app found in archive"
-            find ${{ runner.temp }}/iOpencode.xcarchive -type d -name "*.app" 2>/dev/null || true
-            ls -la ${{ runner.temp }}/iOpencode.xcarchive/Products/ 2>/dev/null || true
+            echo "ERROR: IPA not created"
+            ls -la "$EXPORT_PATH" 2>/dev/null || true
             exit 1
           fi
 
