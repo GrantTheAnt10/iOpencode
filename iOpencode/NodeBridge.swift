@@ -31,18 +31,15 @@ class NodeProcess {
     }
 
     private func runNode() {
-        onOutput?("\u{1B}[1;36m⚡ iOpencode Terminal v1\u{1B}[0m\r\n")
+        onOutput?("\u{1B}[1;36m\u{26A1} iOpencode Terminal v1\u{1B}[0m\r\n")
         onOutput?("\u{1B}[2mInitializing Node.js environment...\u{1B}[0m\r\n")
 
-        var cArgs = ["node", "-e", """
-            console.log('Node.js version: ' + process.version);
-            console.log('Platform: ' + process.platform);
-            console.log('Cwd: ' + process.cwd());
-            console.log('');
-            console.log('\x1b[1;32m✓ Node.js is working!\x1b[0m');
-            console.log('\x1b[1;33mReady for opencode session.\x1b[0m');
-            """].map { strdup($0) } + [nil]
+        let jsCode = "console.log('Node.js version: ' + process.version); console.log('Platform: ' + process.platform); console.log('Cwd: ' + process.cwd()); console.log(''); console.log('\\u001b[1;32m✓ Node.js is working!\\u001b[0m'); console.log('\\u001b[1;33mReady for opencode session.\\u001b[0m');"
 
+        let args = ["node", "-e", jsCode]
+
+        var cArgs = args.map { strdup($0) } + [nil]
+        defer { cArgs.forEach { free($0) } }
         cArgs.withUnsafeMutableBufferPointer { buf in
             node_start(Int32(buf.count - 1), buf.baseAddress)
         }

@@ -18,20 +18,13 @@ class TerminalViewController: UIViewController {
     }
 
     private func setupUI() {
-        let bgGradient = CAGradientLayer()
-        bgGradient.colors = [
-            UIColor(red: 0.05, green: 0.05, blue: 0.12, alpha: 1.0).cgColor,
-            UIColor(red: 0.02, green: 0.02, blue: 0.08, alpha: 1.0).cgColor
-        ]
-        bgGradient.locations = [0.0, 1.0]
-        bgGradient.frame = UIScreen.main.bounds
-        view.layer.insertSublayer(bgGradient, at: 0)
+        view.backgroundColor = UIColor(red: 0.05, green: 0.05, blue: 0.12, alpha: 1.0)
 
         headerView.backgroundColor = UIColor.white.withAlphaComponent(0.04)
         headerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(headerView)
 
-        titleLabel.text = "⚡ iOpencode Session"
+        titleLabel.text = "\u{26A1} iOpencode Session"
         titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         titleLabel.textColor = .white
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -112,11 +105,11 @@ class TerminalViewController: UIViewController {
             terminalTextView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             terminalTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             terminalTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            terminalTextView.bottomAnchor.constraint(equalTo: bottomBar.topAnchor),
+            terminalTextView.bottomAnchor.constraint(equal: view.safeAreaLayoutGuide.bottomAnchor, constant: -60),
 
             bottomBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             bottomBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            bottomBar.bottomAnchor.constraint(equal: view.keyboardLayoutGuide.topAnchor),
+            bottomBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             bottomBar.heightAnchor.constraint(equalToConstant: 60),
 
             bottomDivider.leadingAnchor.constraint(equalTo: bottomBar.leadingAnchor),
@@ -136,10 +129,10 @@ class TerminalViewController: UIViewController {
     }
 
     private func setupNode() {
-        appendOutput("\u{1B}[1;36m⚡ iOpencode Terminal\u{1B}[0m\r\n")
+        appendOutput("\u{1B}[1;36m\u{26A1} iOpencode Terminal\u{1B}[0m\r\n")
         appendOutput("\u{1B}[1;32m✓ Session started\u{1B}[0m\r\n")
-        appendOutput("\u{1B}[2mStarting opencode...\u{1B}[0m\r\n")
-        appendOutput("\u{1B}[2m─────────────────────────────────────\u{1B}[0m\r\n")
+        appendOutput("\u{1B}[2mStarting Node.js...\u{1B}[0m\r\n")
+        appendOutput("\u{1B}[2m--------------------------------\u{1B}[0m\r\n")
 
         NodeProcess.shared.onOutput = { [weak self] text in
             self?.appendOutput(text)
@@ -148,10 +141,6 @@ class TerminalViewController: UIViewController {
             self?.appendOutput(text)
         }
         NodeProcess.shared.start()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
-            self?.appendOutput("\u{1B}[1;33mℹ opencode is ready when you see this message\u{1B}[0m\r\n")
-        }
     }
 
     private func appendOutput(_ text: String) {
@@ -160,8 +149,10 @@ class TerminalViewController: UIViewController {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.terminalTextView.text = self.outputBuffer
-            let bottom = NSRange(location: self.terminalTextView.text.count - 1, length: 1)
-            self.terminalTextView.scrollRangeToVisible(bottom)
+            if !self.outputBuffer.isEmpty {
+                let bottom = NSRange(location: self.terminalTextView.text.count - 1, length: 1)
+                self.terminalTextView.scrollRangeToVisible(bottom)
+            }
         }
     }
 
@@ -169,8 +160,8 @@ class TerminalViewController: UIViewController {
         var result = text
         let patterns = [
             "\u{1B}\\[[0-9;]*[A-Za-z]",
-            "\u{1B}\\][^\u{07}]*\u{07}",
-            "\u{1B}_[^\u{1B}]*\u{1B}"
+            "\u{1B}\\]([^\u{07}]*)\u{07}",
+            "\u{1B}_([^\u{1B}]*)\u{1B}"
         ]
         for pattern in patterns {
             while let range = result.range(of: pattern, options: .regularExpression) {
@@ -181,13 +172,14 @@ class TerminalViewController: UIViewController {
     }
 
     @objc private func closeTapped() {
+        NodeProcess.shared.stop()
         dismiss(animated: true)
     }
 
     @objc private func sendTapped() {
         guard let text = inputField.text, !text.isEmpty else { return }
         appendOutput("\u{1B}[1;34m$\u{1B}[0m \(text)\r\n")
-        NodeProcess.shared.sendInput(text + "\n")
+        NodeProcess.shared.sendInput(text)
         inputField.text = ""
     }
 }

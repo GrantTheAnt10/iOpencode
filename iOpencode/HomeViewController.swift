@@ -20,7 +20,7 @@ class HomeViewController: UIViewController {
     }
 
     private func setupUI() {
-        guard let gradientLayer = CAGradientLayer().self as? CAGradientLayer.Type else { return }
+        let gradientLayer = CAGradientLayer()
 
         let backgroundGradient = CAGradientLayer()
         backgroundGradient.colors = [
